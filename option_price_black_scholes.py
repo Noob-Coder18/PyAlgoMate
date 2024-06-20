@@ -1,8 +1,6 @@
 import math
 from scipy.stats import norm
-from scipy.optimize import newton
 from scipy import optimize
-import numpy as np
 
 
 def black_scholes_call(S, X, r, T, sigma):
