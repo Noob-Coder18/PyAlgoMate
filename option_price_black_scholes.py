@@ -61,7 +61,7 @@ def black_scholes_put(S, X, r, T, sigma):
 
 
 
-def implied_volatility_call(S, K, T, r, market_price, sigma_est=0.2):
+def implied_volatility_call(S, K, r, T, market_price, sigma_est=0.25):
 
     def difference(sigma):
         return black_scholes_call(S, K, r, T, sigma) - market_price
@@ -77,12 +77,12 @@ def implied_volatility_call(S, K, T, r, market_price, sigma_est=0.2):
 
 
 
-def implied_volatility_put(S, X, T, r, market_price, sigma_est=0.25):
+def implied_volatility_put(S, K, r, T, market_price, sigma_est=0.25):
 
     
     
     def difference(sigma):
-        return black_scholes_put(S, X, r, T, sigma) - market_price
+        return black_scholes_put(S, K, r, T, sigma) - market_price
 
     # Using scipy's bisection method to find the root (i.e., implied sigma)
     try:
@@ -93,7 +93,7 @@ def implied_volatility_put(S, X, T, r, market_price, sigma_est=0.25):
     return implied_volatility*100
 
 
-def calculate_theta_and_vega(S, K, T, r, sigma,opt_type):
+def calculate_theta_and_vega(S, K, r, T, sigma,opt_type):
 
     if sigma == 0:
 
