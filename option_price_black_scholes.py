@@ -3,14 +3,14 @@ from scipy.stats import norm
 from scipy import optimize
 
 
-def black_scholes_call(S, X, r, T, sigma):
+def black_scholes_call(S, K, r, T, sigma):
     """
     Calculate the price of a European call option using the Black-Scholes formula.
     
     Parameters:
     S : float
         Current price of the underlying stock
-    X : float
+    K : float
         Strike price of the option
     r : float
         Risk-free interest rate (annualized)
@@ -23,22 +23,22 @@ def black_scholes_call(S, X, r, T, sigma):
     float
         Price of the European call option
     """
-    d1 = (math.log(S / X) + (r + 0.5 * sigma**2) * T) / (sigma * math.sqrt(T))
+    d1 = (math.log(S / K) + (r + 0.5 * sigma**2) * T) / (sigma * math.sqrt(T))
     d2 = d1 - sigma * math.sqrt(T)
     
-    call_price = S * norm.cdf(d1) - X * math.exp(-r * T) * norm.cdf(d2)
+    call_price = S * norm.cdf(d1) - K * math.exp(-r * T) * norm.cdf(d2)
     
     return call_price
 
 
-def black_scholes_put(S, X, r, T, sigma):
+def black_scholes_put(S, K, r, T, sigma):
     """
     Calculate the price of a European put option using the Black-Scholes formula.
     
     Parameters:
     S : float
         Current price of the underlying stock
-    X : float
+    K : float
         Strike price of the option
     r : float
         Risk-free interest rate (annualized)
@@ -51,10 +51,10 @@ def black_scholes_put(S, X, r, T, sigma):
     float
         Price of the European put option
     """
-    d1 = (math.log(S / X) + (r + 0.5 * sigma**2) * T) / (sigma * math.sqrt(T))
+    d1 = (math.log(S / K) + (r + 0.5 * sigma**2) * T) / (sigma * math.sqrt(T))
     d2 = d1 - sigma * math.sqrt(T)
     
-    put_price = X * math.exp(-r * T) * norm.cdf(-d2) - S * norm.cdf(-d1)
+    put_price = K * math.exp(-r * T) * norm.cdf(-d2) - S * norm.cdf(-d1)
     
     return put_price
 
@@ -97,7 +97,7 @@ def calculate_theta_and_vega(S, K, r, T, sigma,opt_type):
 
     if sigma == 0:
 
-        return math.nan
+        return math.nan,math.nan
     
     else:
 
